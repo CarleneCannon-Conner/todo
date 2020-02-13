@@ -1,5 +1,5 @@
-# todo
-Exploring state in React
+# todo app
+Exploring state in React by creating a todo app
 
 ## Tasks I aim to acheive
 - [x] With useState have Add and remove items functionality
