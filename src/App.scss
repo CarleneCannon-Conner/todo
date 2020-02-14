@@ -1,3 +1,83 @@
+$white: #ffffff;
+$light-gray: #C5D1DE;
+$primary-color: #2A7EDC;
+$danger-color: #EC3822;
+$lighter-danger-color: rgba($danger-color, 0.9);
+$lighter-primary-color: rgba($primary-color, 0.9);
+
 .c-app {
-  margin: 20px;
+  padding: 20px;
+  font-size: 16px;
+  background: $light-gray;
+  height: 100vh;
+
+  &__input {
+    width: calc(100% - 190px);
+    height: 40px;
+    line-height: 40px;
+    border-radius: 5px;
+    margin-right: 20px;
+    border: none;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  &__btn {
+    min-width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: none;
+    cursor: pointer;
+
+    &--add {
+      width: 150px;
+    }
+
+    &--primary {
+      background-color: $primary-color;
+      color: $white;
+      &:hover {
+        background-color: $lighter-primary-color;
+      }
+    }
+
+    &--danger {
+      background-color: $danger-color;
+      color: $white;
+      &:hover {
+        background-color: $lighter-danger-color;
+      }
+    }
+  }
+
+  &__container {
+    max-width: 90%;
+    width: 100%;
+    margin: auto;
+
+    @media (min-width: 600px) {
+      max-width: 550px;
+    }
+  }
+
+  &__card {
+    border-radius: 10px;
+    margin-top: 20px;
+    width: 100%;
+  }
+
+  &__item-value {
+    word-break: break-all;
+    background-color: $white;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  &__actions-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
 }

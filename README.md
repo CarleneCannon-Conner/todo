@@ -4,7 +4,7 @@ Exploring state in React by creating a todo app
 ## Tasks I aim to acheive
 - [x] With useState have Add and remove items functionality
 - [x] Move to using Reducers to dispatch actions
-- [ ] Make item cards to improve UI
+- [x] Make item cards to improve UI
 - [ ] Create an updateItem action for updating the text
 - [ ] Create a done toggle button that uses updateItem
 - [ ] Create a archived state and archive button

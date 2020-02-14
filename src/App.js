@@ -1,4 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react';
+import classNames from 'classnames';
+import './normalise.css';
 import './App.scss';
 
 const defaultState =  { items: [] };
@@ -28,7 +30,13 @@ const App = () => {
   const [newItem, setNewItem] = useState("");
   const [state, dispatch] = useReducer(reducer, defaultState);
   
-  const onChangeHandler = (e) => setNewItem(e.target.value)
+  const onChangeHandler = (e) => setNewItem(e.target.value);
+
+  const onKeyUpHandler = (e) => {
+    if (e.keyCode == 13) {
+      dispatch({ type: 'addItem', payload: newItem })
+    }
+  }
 
   useEffect(() => {
     console.table(state.items);
@@ -38,21 +46,36 @@ const App = () => {
 
   return (
     <div className="c-app">
-      <h1>TO DO App</h1>
-      <input value={newItem} onChange={onChangeHandler} />
-      <button 
-        onClick={() => dispatch({ type: 'addItem', payload: newItem })} 
-        disabled={newItem === ""}
-      >
-        Add New Item
-      </button>
-      <ul>
-      {state.items.map(item => (
-      <li key={item.key}>{item.value}
-        <button onClick={()=> dispatch({ type: 'removeItem', payload: item.key })}>X</button>
-      </li>
-      ))}
-    </ul>
+      <div className='c-app__container'>
+        <h1>TO DO App</h1>
+        <input 
+        className='c-app__input'
+        value={newItem} 
+        onChange={onChangeHandler} 
+        onKeyUp={onKeyUpHandler} />
+        <button 
+          onClick={() => dispatch({ type: 'addItem', payload: newItem })} 
+          className='c-app__btn c-app__btn--primary c-app__btn--add'
+          disabled={newItem === ""}
+        >
+          Add New Item
+        </button>
+          <div>
+          {state.items.map(item => (
+          <div 
+            key={item.key}
+            className='c-app__card'
+          >
+            <div className="c-app__actions-container">
+              <button 
+                onClick={()=> dispatch({ type: 'removeItem', payload: item.key })}
+                className='c-app__btn c-app__btn--danger'>Delete</button>
+            </div>
+            <div className='c-app__item-value'>{item.value}</div>
+          </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
