@@ -44,6 +44,10 @@ const App = () => {
   }, [state])
 
 
+  // TODO onClick item-value, switch it to input
+  // TODO click update, update value and switch item-value back to div
+
+
   return (
     <div className="c-app">
       <div className='c-app__container'>
