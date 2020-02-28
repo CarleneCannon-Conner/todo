@@ -6,7 +6,7 @@ Exploring state in React by creating a todo app
 - [x] Move to using Reducers to dispatch actions
 - [x] Make item cards to improve UI
 - [x] Create an updateItem action for updating the text
-- [ ] Create a done toggle button that uses updateItem
+- [x] Create a done toggle button that uses updateItem
 - [ ] Create a archived state and archive button
 - [ ] Create a second view for archived, that let’s me switch between todo and archived
 - [ ] Create unarchive, and clear archive buttons

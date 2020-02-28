@@ -38,6 +38,7 @@ const reducer = (state, action) => {
 }
 const App = () => {
   const [newItem, setNewItem] = useState("");
+  const [editItem, setEditItem] = useState("");
   const [isEditting, setIsEdditing] = useState({})
   const [state, dispatch] = useReducer(reducer, defaultState);
   
@@ -64,13 +65,27 @@ const App = () => {
     setIsEdditing({...isEditting,  [key]: _isEditting })
   }
 
-  const handleUpdate = (e, _item) => {
+  const handleOnKeyDown = (e, item) => {
     const keyCode = e.keyCode || e.which
     if (keyCode === 13) {
-      const item = _item.value = e.target.value
+      item.value = e.target.value
       dispatch({type: 'updateItem', payload: item })
-      toggleIsEditting(_item.key)
+      toggleIsEditting(item.key)
     }
+  }
+
+  const handleOnClickUpdate = (key) => {
+    if (editItem !== "") {
+      dispatch({
+        type: 'updateItem', 
+        payload: {
+          key,
+          value: editItem
+        }
+      })
+      setEditItem('')
+    }
+    toggleIsEditting(key)
   }
 
   return (
@@ -84,7 +99,7 @@ const App = () => {
         onKeyUp={onKeyUpHandler} />
         <button 
           onClick={() => dispatch({ type: 'addItem', payload: newItem })} 
-          className='c-app__btn c-app__btn--primary c-app__btn--add'
+          className='c-app__btn c-app__btn--primary c-app__add-btn'
           disabled={newItem === ""}
         >
           Add New Item
@@ -95,20 +110,27 @@ const App = () => {
             key={item.key}
             className='c-app__card'
           >
-            <div className="c-app__actions-container">
-              <button 
-                onClick={()=> dispatch({ type: 'removeItem', payload: item.key })}
-                className='c-app__btn c-app__btn--danger'>Delete</button>
-            </div>
             {
               isEditting[item.key] === true ? (
-                <input className='c-app__item-edit' 
-                  defaultValue={item.value} 
-                  onKeyDown={(e)=> {handleUpdate(e, item)}}/>
+                <div>
+                  <input className='c-app__item-edit'
+                    defaultValue={item.value} 
+                    onChange={(e)=> setEditItem(e.target.value)}
+                    onKeyDown={(e)=> {handleOnKeyDown(e, item)}}/>
+                  <button
+                    onClick={()=> handleOnClickUpdate(item.key)}
+                    className='c-app__btn c-app__btn--inverse'
+                    >Update</button>
+                  </div>
               ) : (
-                <div 
-                  className='c-app__item-value' 
-                  onClick={()=> {toggleIsEditting(item.key)}}>{item.value}</div>
+                <div>
+                  <div 
+                    className='c-app__item-value' 
+                    onClick={()=> {toggleIsEditting(item.key)}}>{item.value}</div>
+                    <button 
+                      onClick={()=> dispatch({ type: 'removeItem', payload: item.key })}
+                      className='c-app__btn c-app__btn--danger'>Delete</button>
+                </div>
               )
             }
           </div>
