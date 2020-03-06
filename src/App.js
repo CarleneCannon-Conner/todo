@@ -27,7 +27,6 @@ const reducer = (state, action) => {
           } 
         ]
       };
-
       case 'removeItem':
         return { 
           items: state.items.filter(item => item.key !== action.payload)
@@ -88,6 +87,13 @@ const App = () => {
     toggleIsEditting(key)
   }
 
+  const handleOnClickArchive = (item) => {
+    dispatch({
+      type: 'updateItem', 
+      payload: {...item, ...{ archive: true }},
+    })
+  }
+
   return (
     <div className="c-app">
       <div className='c-app__container'>
@@ -105,34 +111,40 @@ const App = () => {
           Add New Item
         </button>
           <div>
-          {state.items.map(item => (
-          <div 
-            key={item.key}
-            className='c-app__card'
-          >
-            {
-              isEditting[item.key] === true ? (
-                <div>
-                  <input className='c-app__item-edit'
-                    defaultValue={item.value} 
-                    onChange={(e)=> setEditItem(e.target.value)}
-                    onKeyDown={(e)=> {handleOnKeyDown(e, item)}}/>
-                  <button
-                    onClick={()=> handleOnClickUpdate(item.key)}
-                    className='c-app__btn c-app__btn--inverse'
-                    >Update</button>
+          {state.items.filter(item => !item.archive).map(item => (
+          <div key={item.key}>
+            <div className="c-app__action-container">
+              <button 
+                onClick={()=> dispatch({ type: 'removeItem', payload: item.key })}
+                className='c-app__btn c-app__btn--danger'>Delete</button>
+              <button 
+                onClick={()=> {handleOnClickArchive(item)}}
+                className='c-app__btn c-app__btn--inverse'>Archive</button>
+            </div>
+            <div 
+              className='c-app__card-container'
+            >
+              {
+                isEditting[item.key] === true ? (
+                  <div className="c-app__card">
+                    <input className='c-app__item-edit'
+                      defaultValue={item.value} 
+                      onChange={(e)=> setEditItem(e.target.value)}
+                      onKeyDown={(e)=> {handleOnKeyDown(e, item)}}/>
+                    <button
+                      onClick={()=> handleOnClickUpdate(item.key)}
+                      className='c-app__btn c-app__btn--inverse'
+                      >Update</button>
+                    </div>
+                ) : (
+                  <div className="c-app__card">
+                    <div 
+                      className='c-app__item-value' 
+                      onClick={()=> {toggleIsEditting(item.key)}}>{item.value}</div>
                   </div>
-              ) : (
-                <div>
-                  <div 
-                    className='c-app__item-value' 
-                    onClick={()=> {toggleIsEditting(item.key)}}>{item.value}</div>
-                    <button 
-                      onClick={()=> dispatch({ type: 'removeItem', payload: item.key })}
-                      className='c-app__btn c-app__btn--danger'>Delete</button>
-                </div>
-              )
-            }
+                )
+              }
+            </div>
           </div>
           ))}
         </div>

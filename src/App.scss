@@ -11,6 +11,12 @@ $lighter-primary-color: rgba($primary-color, 0.9);
   background: $light-gray;
   height: 100vh;
 
+  &__action-container {
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 20px;
+  }
+
   &__input {
     width: calc(100% - 190px);
     height: 40px;
@@ -29,7 +35,7 @@ $lighter-primary-color: rgba($primary-color, 0.9);
     padding-right: 10px;
     border: none;
     cursor: pointer;
-    margin-left: 20px;
+    margin-left: 10px;
 
     &--primary {
       border: 1px solid $primary-color;
@@ -72,10 +78,13 @@ $lighter-primary-color: rgba($primary-color, 0.9);
     }
   }
 
-  &__card {
-    border-radius: 10px;
-    margin-top: 20px;
+  &__card-container {
+    padding-top: 10px;
     width: 100%;
+  }
+
+  &__card {
+    display: flex;
   }
 
   &__item-value,
@@ -83,13 +92,14 @@ $lighter-primary-color: rgba($primary-color, 0.9);
     background-color: $white;
     padding: 10px;
     border-radius: 5px;
-    width: calc(100% - 144px);
+    width: calc(100% - 134px);
   }
 
   &__item-value {
     word-break: break-all;
     display: inline-block;
     border: 2px solid white;
+    width: 100%;
   }
 
   &__add-btn {
